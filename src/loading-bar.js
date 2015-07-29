@@ -163,6 +163,8 @@ angular.module('cfp.loadingBar', [])
     this.autoIncrement = true;
     this.includeSpinner = true;
     this.includeBar = true;
+    this.includeSpinnerDefault = true;
+    this.includeBarDefault = true;
     this.latencyThreshold = 100;
     this.startSize = 0.02;
     this.parentSelector = 'body';
@@ -172,6 +174,7 @@ angular.module('cfp.loadingBar', [])
     this.$get = ['$injector', '$document', '$timeout', '$rootScope', function ($injector, $document, $timeout, $rootScope) {
       var $animate;
       var $parentSelector = this.parentSelector,
+        $defaultSelector = this.defaultSelector,
         loadingBarContainer = angular.element(this.loadingBarTemplate),
         loadingBar = loadingBarContainer.find('div').eq(0),
         spinner = angular.element(this.spinnerTemplate);
@@ -183,6 +186,8 @@ angular.module('cfp.loadingBar', [])
 
       var autoIncrement = this.autoIncrement;
       var includeSpinner = this.includeSpinner;
+      var includeSpinnerDefault = this.includeSpinnerDefault;
+      var includeBarDefault = this.includeBarDefault;
       var includeBar = this.includeBar;
       var startSize = this.startSize;
 
@@ -195,6 +200,11 @@ angular.module('cfp.loadingBar', [])
         }
 
         var $parent = $document.find($parentSelector).eq(0);
+        if (!$parent[0]) {
+          $parent = $document.find($defaultSelector).eq(0);
+          includeBar = includeBarDefault;
+          includeSpinner = includeSpinnerDefault;
+        }
         $timeout.cancel(completeTimeout);
 
         // do not continually broadcast the started event:
@@ -314,6 +324,7 @@ angular.module('cfp.loadingBar', [])
         includeSpinner   : this.includeSpinner,
         latencyThreshold : this.latencyThreshold,
         parentSelector   : this.parentSelector,
+        defaultSelector  : this.defaultSelector,
         startSize        : this.startSize
       };
 
