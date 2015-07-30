@@ -163,11 +163,9 @@ angular.module('cfp.loadingBar', [])
     this.autoIncrement = true;
     this.includeSpinner = true;
     this.includeBar = true;
-    this.includeSpinnerDefault = true;
-    this.includeBarDefault = true;
     this.latencyThreshold = 100;
     this.startSize = 0.02;
-    this.parentSelector = 'body';
+    this.defaultSelector = 'body';
     this.spinnerTemplate = '<div id="loading-bar-spinner"><div class="spinner-icon"></div></div>';
     this.loadingBarTemplate = '<div id="loading-bar"><div class="bar"><div class="peg"></div></div></div>';
 
@@ -186,8 +184,6 @@ angular.module('cfp.loadingBar', [])
 
       var autoIncrement = this.autoIncrement;
       var includeSpinner = this.includeSpinner;
-      var includeSpinnerDefault = this.includeSpinnerDefault;
-      var includeBarDefault = this.includeBarDefault;
       var includeBar = this.includeBar;
       var startSize = this.startSize;
 
@@ -202,8 +198,6 @@ angular.module('cfp.loadingBar', [])
         var $parent = $document.find($parentSelector).eq(0);
         if (!$parent[0]) {
           $parent = $document.find($defaultSelector).eq(0);
-          includeBar = includeBarDefault;
-          includeSpinner = includeSpinnerDefault;
         }
         $timeout.cancel(completeTimeout);
 
